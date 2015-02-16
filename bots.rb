@@ -56,19 +56,19 @@ class MyBot < Ebooks::Bot
 
   def on_timeline(tweet)
     # Reply to a tweet in the bot's timeline
-    return nil if tweet.text.match /@/ 
-    return nil if tweet.retweet? 
-
-
+    
     #if tweet.text.match /#girltimeusa/i and meta(tweet).reply_prefix.match /@namastegeoduck/i
-    if tweet.text.match /#girltimeusa/i and meta(tweet).reply_prefix.match /@lilbthebasedgod/i
+    if tweet.text.match /#girltime/i and tweet.retweet?
       delay do
-        txt = @model.make_response(tweet.text, 80) + " " + meta(tweet).reply_prefix
+        txt = @model.make_response(tweet.text, 80) + " @lilbthebasedgod" 
         txt = txt + " #GirlTimeUSA" if ! txt.match /GirlTimeUSA/i
-        pictweet(txt, @logic.generate, {'in_reply_to_status_id' => tweet.id})
+        pictweet(txt, @logic.generate)
         return nil
       end 
     end
+
+    return nil if tweet.text.match /@/ 
+    return nil if tweet.retweet? 
     
     tokens = Ebooks::NLP.tokenize(tweet.text).collect { |x| x.downcase }
     count = (tokens & @top100).uniq.count
