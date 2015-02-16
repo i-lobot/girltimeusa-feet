@@ -60,8 +60,8 @@ class MyBot < Ebooks::Bot
     #if tweet.text.match /#girltimeusa/i and meta(tweet).reply_prefix.match /@namastegeoduck/i
     if tweet.text.match /#girltime/i and tweet.retweet?
       delay do
-        txt = @model.make_response(tweet.text, 80) + " @lilbthebasedgod" 
-        txt = txt + " #GirlTimeUSA" if ! txt.match /GirlTimeUSA/i
+        txt = "@LILBTHEBASEDGOD @GirlTimeUSA " + @model.make_response(tweet.text, 80)
+        txt = txt + " #{%w(#GirlTime #girltime #gt #GirlTimeUsa).sample}" if ! txt.match /GirlTimeUSA/i
         pictweet(txt, @logic.generate)
         return nil
       end 
