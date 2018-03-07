@@ -24,8 +24,8 @@ class MyBot < Ebooks::Bot
   def on_startup
     load_model!
     @logic = GirlTime.new
-    statement = @model.make_statement(140)
-    tweet(statement)
+    statement = @model.make_statement(280)
+    #tweet(statement)
     scheduler.every '2h' do
       statement = @model.make_statement(140)
       tweet(statement) if rand(0..4)==0
@@ -58,7 +58,8 @@ class MyBot < Ebooks::Bot
     # Reply to a tweet in the bot's timeline
     
     #if tweet.text.match /#girltimeusa/i and meta(tweet).reply_prefix.match /@namastegeoduck/i
-    if tweet.text.match /#girltime/i and tweet.retweet?
+    if tweet.text.match /girltime/i
+      log tweet.text
       delay do
         txt = "@LILBTHEBASEDGOD @GirlTimeUSA " + @model.make_response(tweet.text, 80)
         txt = txt + " #{%w(#GirlTime #girltime #gt #GirlTimeUsa).sample}" if ! txt.match /GirlTimeUSA/i
